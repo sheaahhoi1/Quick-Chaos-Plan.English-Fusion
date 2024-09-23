@@ -8,6 +8,7 @@
 基於前4個計劃製作的混合基礎版
 <br>
 此計劃明確依賴melt_eng作次級輸入,emoji已添加
+<a href="https://github.com/sheaahhoi1/RIME_Quick_Chaos_Plan.English/commit/1358e04a9c9747e728d725a8840b8cac6137ce12">修改說明</a>
 <br>
 <font size="15">速成混沌計劃   拆碼困難?好像是但又拆不了,正是為此誕生</font>
 <br>
