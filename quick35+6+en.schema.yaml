@@ -33,7 +33,7 @@ switches:
   - name: emoji
     reset: 1
     states: [ "😫", "🤩" ]  
-    reset: 0
+    reset: 1
   - name: ascii_punct
     states: [ 。，, ．， ]        #中西文标点切换开关,0 为中文句读，1 为西文标点。
     reset: 1
