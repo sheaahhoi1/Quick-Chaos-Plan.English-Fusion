@@ -29,6 +29,10 @@ editor:
     Return: confirm    
 ```
 
+<br>
+切記格式規範,不能更變縮排層次
+<br>
+
 `
 initial_quality: "-1"     # 英文权重-1,可能在最後
 `
