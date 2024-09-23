@@ -1,0 +1,114 @@
+# Rime dictionary		
+# encoding: utf-8		
+#		
+# Easy English Nano使用的英文主词典，主要构成为2016考研词汇大纲和六级单词，数据量6K条。
+#	原作version 2017.03.31 by tanzi	
+#	修订version by tumuyan
+#	2019.10	把原省略字符的字典，改为全文字典，并进行了一些扩展
+#	2020.08	添加大写单词（放置在词典顶部），并对词条排序
+
+---	
+name: melt_eng_custom		
+version: "2024.04.04"		
+#sort: by_weight		
+use_preset_vocabulary: true		
+
+# 用户自定义词库
+
+...	
+admin	admin	100
+paypal	paypal	100
+applepay	applepay	100
+Alipay	Alipay	100
+AlipayHK	AlipayHK	100
+googlepay	googlepay	100
+samsungpay	samsungpay	100
+samsung	samsung	100
+WeChatpay	wechatpay	100
+WeChat	wechat	100
+BoC	BoC	100
+BoCpay	BoCpay	100
+HSBC	HSBC	100
+PayMe	PayMe	100
+octopus	octopus	100
+citibank	citibank	100
+citi	citi	100
+VPN	VPN	100
+yuu	yuu	100
+ZAbank	ZAbank	100
+Mox	Mox	100
+AEON	AEON	100
+livi	livi	100
+liviBank	liviBank	100
+GPU	GPU	100
+DPU	DPU	100
+TPU	TPU	100
+NPU	NPU	100
+GDDR	GDDR	100
+DDR	DDR	100
+whatsapp	whatsapp	100
+signal	signal	100
+Telegram	Telegram	100
+TG	TG	100
+DC	DC	100
+Discord	Discord	100
+Skype	Skype	100
+Instagram	Instagram	100
+facebook	facebook	100
+Meta	Meta	100
+Siri	Siri	100
+ChatGPT	ChatGPT	100
+GPT	GPT	100
+Claude	Claude	100
+chrome	chrome	100
+Chromium	Chromium	100
+Copilot	Copilot	100
+Notion	Notion	100
+Evernote	Evernote	100
+Edge	Edge	100
+Epic	Epic	100
+XBOX	XBOX	100
+Steam	Steam	100
+MuMu	MuMu	100
+HoYoPlay	HoYoPlay	100
+HoYoLab	HoYoLab	100
+Logitech	Logitech	100
+OBS	OBS	100
+Java	Java	100
+Docker	Docker	100
+Desktop	Desktop	100
+GitHub	GitHub	100
+codeberg	codeberg	100
+heroku	heroku	100
+replit	replit	100
+pastebin	pastebin	100
+Gitee	Gitee	100
+IOS	IOS	100
+ISO	ISO	100
+TIM	TIM	100
+VTube	VTube	100
+ebay	ebay	100
+iwatch	iwatch	100
+iMac	iMac	100
+yaml	yaml	100
+VScode	VScode	100
+powerBI	powerBI	100
+lau	lau	100
+pdf	pdf	100
+FireFox	FireFox	100
+Safari	Safari	100
+speedtest	speedtest	100
+googleplay	googleplay	100
+appstore	appstore	100
+MSstore	MSstore	100
+twitch	twitch	100
+GTFO	GTFO	100
+GTG	GTG	100
+ATM	ATM	100
+omg	omg	100
+JK	JK	100
+youtube	youtube	100
+Bilibili	Bilibili	100
+SAO	SAO	100
+BIOS	BIOS	100
+UEFI	UEFI	100

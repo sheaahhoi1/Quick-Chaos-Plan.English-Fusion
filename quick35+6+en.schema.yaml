@@ -1,0 +1,236 @@
+# Rime schema settings
+# encoding: utf-8
+
+schema:
+  schema_id: quick35+6+en
+  name: 速成混沌計劃·英混
+  version: "0.1a"
+  author:
+    - sheaahhoi1
+  description: |
+    速成詞句連打,混沌已成~!
+    這是混沌英混版,因為是3/5/6代混碼,
+    基於前4個計劃製作的混合基礎版
+    此計劃明確依賴melt_eng作次級輸入,emoji已添加
+  dependencies:
+    - luna_quanpin
+    - melt_eng
+    #- easy_en
+
+
+switches:
+# 默認開啓Unihan全字集    
+  - name: ascii_mode
+    reset: 0
+    states: [ 中文, 英文 ]
+  - name: full_shape
+    states: [ 半角, 全角 ]
+    reset: 0
+  - name: simplification
+    states: [ 漢字, 汉字 ]
+  - name: traditionalization
+    states: [ 简, 繁 ]
+  - name: emoji
+    reset: 1
+    states: [ "😫", "🤩" ]  
+    reset: 0
+  - name: ascii_punct
+    states: [ 。，, ．， ]        #中西文标点切换开关,0 为中文句读，1 为西文标点。
+    reset: 1
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - script_translator
+    - table_translator
+    - reverse_lookup_translator
+    #- table_translator@easy_en            # 切換easy_en英文詞庫,翻譯器
+    - table_translator@melt_eng            # 切換melt_eng英文詞庫,翻譯器
+    - table_translator@cn_en            # 中英混合词汇
+    - table_translator@custom_phrase    # 自定义短语 custom_phrase.txt
+    - table_translator@custom_casual    # 自定义语 custom_casual.txt
+    #- table_translator@custom_phrase    # 自定义XX目錄 custom_phrase.txt
+  filters:
+    - simplifier
+    - simplifier@emoji            # Emoji翻譯器專用位置
+    - uniquifier
+
+# 最大输入长度
+codeLengthLimit_processor: 25
+
+speller:
+  alphabet: zyxwvutsrqponmlkjihgfedcba
+  delimiter: " ;'"
+  algebra:
+    - 'derive/^([^z])\w+(\w)$/$1$2/'  # 取倉頡首尾二碼爲速成碼
+  auto_select: true                     #自動上屛【true或false】
+
+translator:
+  dictionary: quick35+6
+  prism: quick35+6
+  enable_charset_filter: true           # 开启字符集过滤,限制生辟字
+  enable_completion: true               # 是否显示编码未输入完整的词条
+  enable_sentence: true                # 句子输入模式
+  enable_user_dict: true               # 是否开启用户词典（用户词典记录动态字词频，用户词）
+  enable_encoder: true               # 是否开启自动造词
+  encode_commit_history: true          # 是否对已上屏词自动成词（仅 table_translator 有效）
+  #spelling_hints: 2                  # 1詞輸入碼量
+  #max_phrase_length: 25          # 最大自动成词词长【number】
+  enable_completion: true          # 提前显示尚未输入完整码的字【true 或 false】
+  sentence_over_completion: true         # 在无全码对应字而仅有逐键提示时也开启智能组句【true 或 false】
+  preedit_format:
+    - "xlit|abcdefghijklmnopqrstuvwxyz;'|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符··|"
+  comment_format:
+    - "xlit|abcdefghijklmnopqrstuvwxyz~|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符～|"
+  #disable_user_dict_for_patterns:
+  #  - "^z.*$"
+  #  - "^yyy.*$"
+  initial_quality: 1.2
+
+
+# 次翻译器，英文
+melt_eng:
+  dictionary: melt_eng
+  #dictionary: easy_en
+  enable_completion: true   # 禁止造句,英文模式下出现带有☯图案的无意义单词,这是因为开启了造句功能而导致的，连续输入增强需依靠该功能才能工作（开启连续输入增强后会自动隐藏这些单词）。
+  enable_sentence: false  # 禁用用户词典
+  initial_quality: "-1"     # 英文权重-1,可能在最後
+  spelling_hints: 15        # 1詞輸入碼量
+  comment_format:          # 自定义提示码
+    - xform/.*//           # 清空提示码（就是没有那个小尾巴）
+
+
+# 中英混合词汇
+cn_en:
+  dictionary: ""
+  user_dict: en_dicts/cn_en
+  db_class: stabledb
+  enable_completion: true
+  enable_sentence: false
+  initial_quality: 0.5
+  comment_format:
+    - xform/^.+$//
+
+# 自定义短语：custom_phrase.txt
+custom_phrase:
+  dictionary: ""
+  user_dict: custom_phrase  # 可以修改这里，改成自己的 txt 文件
+  db_class: stabledb        # 只读数据库，无法动态调频；设为 tabledb 可以动态调频
+  enable_completion: false  # 补全提示
+  enable_sentence: false    # 禁止造句
+  enable_completion: true          # 提前显示尚未输入完整码的字【true 或 false】
+  initial_quality: 99       # custom_phrase 的权重应该比 pinyin 和 melt_eng 大
+
+# 自定义语：custom_casual.txt
+custom_casual:
+  dictionary: ""
+  user_dict: custom_casual  # 可以修改这里，改成自己的 txt 文件
+  db_class: tabledb        # 只读数据库，无法动态调频；设为 tabledb 可以动态调频
+  enable_completion: false  # 补全提示
+  enable_sentence: false    # 禁止造句
+  enable_completion: true          # 提前显示尚未输入完整码的字【true 或 false】
+  initial_quality: 2.0       # custom_casual 的权重应该比 pinyin 和 melt_eng 大
+
+# 简繁切换
+traditionalize:
+  option_name: traditionalization
+  opencc_config: s2t.json  # s2t.json | s2hk.json | s2tw.json | s2twp.json
+  tips: none               # 转换提示: all 都显示 | char 仅单字显示 | none 不显示。
+  tags: [ abc, number,  luna_pinyin]  # 限制在对应 tag，不对其他如反查的内容做简繁转换
+
+# Emoji
+emoji:
+  option_name: emoji
+  opencc_config: emoji.json
+  tips: all                          # 转换提示: all 都显示 | char 仅单字显示 | none 不显示。
+  inherit_comment: false  # 啟用的話在反查中，emoji 返回空注释
+
+abc_segmentor:
+  extra_tags:
+    - reverse_lookup
+
+reverse_lookup:
+  dictionary: luna_pinyin
+  prism: luna_quanpin
+  prefix: "`"
+  suffix: "'"
+  tips: "〔倉頡〕"
+  preedit_format:
+    - xform/([nl])v/$1ü/
+    - xform/([nl])ue/$1üe/
+    - xform/([jqxy])v/$1u/
+  comment_format:
+    - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|"
+
+punctuator:
+  import_preset: default
+
+key_binder:
+  import_preset: default
+  bindings:
+    - {accept: "Control+Shift+E", toggle: emoji_suggestion, when: always}
+    - {accept: "Control+Shift+exclam", toggle: transcription, when: has_menu}
+    - {accept: "Control+Shift+1", toggle: transcription, when: has_menu}
+    - {accept: "Control+Shift+C", toggle: chaifen, when: has_menu} # 拆字滤镜开关
+    - {accept: minus, send: Page_Up, when: paging}     # 使用`-`进行向上翻页（第一页时候无效）
+    - {accept: equal, send: Page_Down, when: has_menu} # 使用`=`进行向下翻页
+    # Emacs 风格的快捷键
+    - { when: composing, accept: Control+p, send: Up }     # composing 时,Control+p 等同于 Up 键
+    - { when: composing, accept: Control+n, send: Down }
+    - { when: composing, accept: Control+b, send: Left }
+    - { when: composing, accept: Control+f, send: Right }
+    - { when: composing, accept: Control+a, send: Home }
+    - { when: composing, accept: Control+e, send: End }
+    - { when: composing, accept: Control+d, send: Delete }
+    - { when: composing, accept: Control+k, send: Shift+Delete } # 删除到行尾
+    - { when: composing, accept: Control+g, send: Escape }       # 退出编码
+    - { when: composing, accept: Alt+v, send: Page_Up }          # 翻页
+    - { when: composing, accept: Control+v, send: Page_Down }
+    # 按词移动光标
+    - { when: composing, accept: ISO_Left_Tab, send: Shift+Left } # ISO_Left_Tab 是 Shift+Tab
+    - { when: composing, accept: Shift+Tab, send: Shift+Left }
+    - { when: composing, accept: Tab, send: Shift+Right }
+    # 翻页
+    - { when: paging, accept: minus, send: Page_Up }             # 编码窗口翻页
+    - { when: has_menu, accept: equal, send: Page_Down }
+    - { when: paging, accept: comma, send: Page_Up }             # 候选窗口翻页
+    - { when: has_menu, accept: period, send: Page_Down }
+    - { when: predicting, accept: comma, send: comma }           # 在预编码模式下,不当作快捷键
+    - { when: predicting, accept: period, send: period }
+    # 切换状态
+    - { when: always, accept: Control+Shift+1, select: .next }   # 切换输入方案
+    - { when: always, accept: Control+Shift+2, toggle: ascii_mode } # 切换中/西文模式
+    - { when: always, accept: Control+Shift+3, toggle: full_shape } # 切换全角/半角
+    - { when: always, accept: Control+Shift+4, toggle: simplification } # 切换简体/繁体
+    - { when: always, accept: Control+Shift+5, toggle: extended_charset } # 切换扩展字符
+    - { when: always, accept: Shift+space, toggle: full_shape } # 另一种切换全角/半角的方式
+    - { when: always, accept: Control+period, toggle: ascii_punct } # 切换中/西文标点
+
+#enter輸入文字
+editor:
+  bindings:
+    Return: confirm    
+
+recognizer:
+  import_preset: default
+  patterns:
+    reverse_lookup: "`[a-z]*'?$"
+  
+menu:
+  # 候选词个数
+  page_size: 9
