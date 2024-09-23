@@ -17,6 +17,11 @@
 rime-easy-en自動分隔詞匯方案不方便支援移動端,而且設置在困難
 <br>
 預設設置下英語權重是-1,可能在最後一頁
+
+`
+initial_quality: "-1"     # 英文权重-1,可能在最後
+`
+
 <br>
 <br>
 在RIME中,在此方案內添加了enter輸入選擇中內容,把字串放到default.yaml/default.custom.yaml,可以影響全部方案
@@ -35,9 +40,6 @@ editor:
 ```
 
 
-`
-initial_quality: "-1"     # 英文权重-1,可能在最後
-`
 
 <br>
 順帶把emoji添加進來
